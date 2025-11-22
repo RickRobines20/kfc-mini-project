@@ -1,0 +1,62 @@
+function setGreetingMessage() {
+    const hour = new Date().getHours();
+    let greeting;
+
+    if (hour < 12) {
+        greeting = "Good Morning! Start your day the finger-lickin' way.";
+    } else if (hour < 18) {
+        greeting = "Good Afternoon! Lunch is ready and waiting for you.";
+    } else {
+        greeting = "Good Evening! Order in tonight and relax.";
+    }
+
+    const greetingElement = document.getElementById('greeting-message');
+
+    if (greetingElement) {
+        greetingElement.textContent = greeting;
+    }
+}
+
+setGreetingMessage();
+
+function validateContactForm(event) {
+    event.preventDefault(); 
+
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const messageInput = document.getElementById('message');
+    
+    const name = nameInput ? nameInput.value.trim() : '';
+    const email = emailInput ? emailInput.value.trim() : '';
+    const message = messageInput ? messageInput.value.trim() : '';
+    
+    let isValid = true;
+    let errors = [];
+
+    if (name.length < 2) {
+        errors.push('Name must be at least 2 characters long.');
+        isValid = false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        errors.push('Please enter a valid email address (e.g., user@domain.com).');
+        isValid = false;
+    }
+
+    if (message.length < 10) {
+        errors.push('Message must be at least 10 characters long.');
+        isValid = false;
+    }
+    
+    if (isValid) {
+        alert('Form submitted successfully! Thank you for contacting KFC. We will be in touch soon.');
+    } else {
+        alert('Please correct the following errors before submitting:\n\n' + errors.join('\n'));
+    }
+}
+
+const contactForm = document.getElementById('contact-form');
+if (contactForm) {
+    contactForm.addEventListener('submit', validateContactForm);
+}
